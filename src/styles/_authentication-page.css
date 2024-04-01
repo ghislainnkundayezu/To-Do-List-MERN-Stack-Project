@@ -1,0 +1,87 @@
+/* This css file is used to style the contents in the authentication page */
+
+.page {
+    display: grid;
+    place-items: center;
+}
+
+.container {
+    width: 35%;
+    height: 75%;
+    background: var(--surface-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 32px;
+    gap: 20px;
+}
+
+.toggle-page-btn {
+    width: 100%;
+    display: flex;
+    border-radius: 8px;
+    border: 1px solid var(--border-primary);
+    padding: 1px;
+    gap: 0px;
+
+}
+
+.toggle-page-btn button { 
+    flex: 1;
+    padding-block: 12px;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+.toggle-page-btn button:first-child { 
+    border-radius: 8px 0px 0px 8px;
+    
+}
+
+.toggle-page-btn button:last-child { 
+    border-radius: 0px 8px 8px 0px;
+    
+}
+
+
+
+.toggle-page-btn button.is-active { 
+    background: var(--button-secondary);
+    color: var(--text-primary);
+}
+
+
+.input-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+.input {
+    width: 100%;
+    padding: 16px 16px;
+    border-radius: 8px;
+    outline: none;
+    border: 1px solid var(--border-primary);
+    font-size: 16px;
+}
+
+.input::placeholder {
+    font-size: 12px;
+    color: var(--placeholder-text);
+}
+
+.input[type="submit"] {
+    border: 0;
+    cursor: pointer;
+    color: var(--text-primary);
+    background: var(--button-primary);
+}
+
+.input[type="submit"]:hover {
+    background: var(--button-primary-hover);
+}

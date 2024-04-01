@@ -1,0 +1,39 @@
+/* CSS File which contains style variables for our application. */
+
+:root {
+    /* Color styles */
+    --surface-primary: #fff;
+    --text-primary: #fff;
+    --placeholder-text: #4E4C4C;
+    --button-primary: #8BA0F3;
+    --button-secondary: #4156A1;
+    --button-primary-hover: #2D6BC8;
+    --border-primary: #E0E0EC;
+    --stroke-active: #4156A1;
+    --icon-hover-secondary: #FE0202;
+
+    /* Effect styles */
+    --shadow:  0px 4px 4px rgba(0, 0, 0, 0.25);
+
+}
+
+.light-theme {
+    --text-primary-light: #000000;
+    --surface-primary-light: #FFFFFF;
+    --task-surface-light: #F1F1FA;
+    --task-surface-hover-light: #DAE0E5;
+    --icons-primary-light: #000000;
+    --icon-surface-light: #FFFFFF;
+    --icon-surface-hover-light: #DAE0E5;
+
+}
+
+.dark-theme {
+    --surface-primary-dark: #272935;
+    --task-surface-dark: #35344A;
+    --task-surface-hover-dark: #575578;
+    --icons-primary-dark: #FFFFFF;
+    --icons-surface-dark: #272935;
+    --icon-surface-hover-dark: #575578;
+
+}

@@ -1,0 +1,15 @@
+/* This css file provides some presets. */
+@import 'typeface-inter'; 
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter';
+    text-rendering: optimizeLegibility;
+}
+
+html, body, #root {
+    width: 100%;
+    height: 100%;
+}

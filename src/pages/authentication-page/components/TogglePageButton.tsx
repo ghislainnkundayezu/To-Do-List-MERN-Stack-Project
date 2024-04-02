@@ -1,29 +1,27 @@
-import { FC, useContext, useEffect } from "react";
+import { FC, useContext } from "react";
 import { ActiveFormContext } from "../AuthenticationPage";
 
 
 interface TogglePageButtonProp {
     value: string;
     dataFormValue: string;
-    
+    className: string;
     
 }
 
 export const TogglePageButton: FC<TogglePageButtonProp> = (props) => {
-    const { activeForm, changeActiveForm } = useContext(ActiveFormContext)!;
+    const { changeActiveForm } = useContext(ActiveFormContext)!;
    
-
-    useEffect(()=> {
-
-    }, [activeForm])
-
-    function clickHandler  (event: React.MouseEvent<HTMLButtonElement>)  {
-
+    function clickHandler  (event: React.MouseEvent<HTMLButtonElement, MouseEvent>)  {
+        const target = event.target as HTMLElement;
+        const attribute: string = target.getAttribute("data-value-form")!;
+        changeActiveForm(attribute);
+        
     }
 
     return(
         <button 
-            className="is-active" 
+            className={props.className} 
             data-value-form={props.dataFormValue}
             onClick={clickHandler}
             >{props.value}</button>

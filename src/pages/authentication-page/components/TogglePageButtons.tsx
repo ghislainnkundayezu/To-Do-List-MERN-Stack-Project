@@ -4,18 +4,20 @@ import { useContext } from "react";
 import { ActiveFormContext } from "../AuthenticationPage";
 
 export const TogglePageButtons: FC = () => {
-    const { activeForm} = useContext(ActiveFormContext)!;
-
+    const { activeForm } = useContext(ActiveFormContext)!;
     
 
     return(
         <div className='toggle-page-btn'>
             <TogglePageButton  
-                value={"SignUp"}
+                className={activeForm==="signup" ? "is-active-form" : ""} 
+                value={"Signup"}
                 dataFormValue={"signup"} />
-            <TogglePageButton  
-                value={"LogIn"}
+            <TogglePageButton
+                className={activeForm==="login" ? "is-active-form" : ""}  
+                value={"Login"}
                 dataFormValue={"login"} />
         </div>
     );
+    
 }

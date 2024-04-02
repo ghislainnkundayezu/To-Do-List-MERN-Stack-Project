@@ -1,6 +1,6 @@
 /* This css file is used to style the contents in the authentication page */
 
-.page {
+#authentication-page.page {
     display: grid;
     place-items: center;
 }
@@ -47,7 +47,7 @@
 
 
 
-.toggle-page-btn button.is-active { 
+.toggle-page-btn button.is-active-form { 
     background: var(--button-secondary);
     color: var(--text-primary);
 }
@@ -61,7 +61,7 @@
 
 }
 
-.input {
+.input, .form-submit-button {
     width: 100%;
     padding: 16px 16px;
     border-radius: 8px;
@@ -75,13 +75,13 @@
     color: var(--placeholder-text);
 }
 
-.input[type="submit"] {
+.form-submit-button {
     border: 0;
     cursor: pointer;
     color: var(--text-primary);
     background: var(--button-primary);
 }
 
-.input[type="submit"]:hover {
+.form-submit-button:hover {
     background: var(--button-primary-hover);
 }

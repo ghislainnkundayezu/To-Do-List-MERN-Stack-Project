@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { InputField } from "./InputField";
+import { FormSubmitButton } from "./FormSubmitButton";
 
 export const SignupFrame: FC = () => {
     return(
@@ -19,7 +20,8 @@ export const SignupFrame: FC = () => {
                 placeholder="Confirm password..."
             />
             
-            <InputField type="submit" />
+            <FormSubmitButton value="Signup" />
+            
         </form>
     );
 }

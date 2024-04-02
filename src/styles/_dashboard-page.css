@@ -1,0 +1,59 @@
+/* This css file contain styles for elements in the Dashboard Page */
+
+#dashboard-page.page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 56px 110px;
+    background: var(--surface-secondary);
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    gap: 24px;
+}
+
+.search-bar {
+    flex: 1;
+    padding: 8px 20px;
+    font-size: 16px;
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    outline: none;
+    background: var(--surface-secondary);
+    color: var(--text-secondary)
+}
+
+.search-bar::placeholder {
+    color: var(--placeholder-text);
+    font-size: 14px;
+}
+
+#activity-page-link, #toggle-theme-btn {
+    padding: 8px 12px;
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+    background: var(--surface-secondary);
+    cursor: pointer;
+    outline: none;
+
+    svg {
+        font-size: 20px;
+        color: var(--icon-primary);
+    }
+}
+
+:is(#activity-page-link, #toggle-theme-btn):hover {
+    background: var(--icon-surface-hover)
+}
+
+.body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-block: 40px;
+    position: relative;
+}

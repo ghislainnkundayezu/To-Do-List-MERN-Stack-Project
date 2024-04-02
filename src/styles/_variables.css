@@ -18,22 +18,21 @@
 }
 
 .light-theme {
-    --text-primary-light: #000000;
-    --surface-primary-light: #FFFFFF;
-    --task-surface-light: #F1F1FA;
-    --task-surface-hover-light: #DAE0E5;
-    --icons-primary-light: #000000;
-    --icon-surface-light: #FFFFFF;
-    --icon-surface-hover-light: #DAE0E5;
-
+    --text-secondary: #000000;
+    --surface-secondary: #FFFFFF;
+    --task-surface: #F1F1FA;
+    --task-surface-hover: #DAE0E5;
+    --icon-primary: #000000;
+    --icon-surface: #FFFFFF;
+    --icon-surface-hover: #DAE0E5;
 }
 
 .dark-theme {
-    --surface-primary-dark: #272935;
-    --task-surface-dark: #35344A;
-    --task-surface-hover-dark: #575578;
-    --icons-primary-dark: #FFFFFF;
-    --icons-surface-dark: #272935;
-    --icon-surface-hover-dark: #575578;
-
+    --text-secondary: #fff;
+    --surface-secondary: #272935;
+    --task-surface: #35344A;
+    --task-surface-hover: #575578;
+    --icon-primary: #FFFFFF;
+    --icons-surface: #272935;
+    --icon-surface-hover: #575578;
 }

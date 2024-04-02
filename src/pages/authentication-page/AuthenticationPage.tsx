@@ -12,11 +12,11 @@ export const ActiveFormContext = createContext<ActiveFormContextType | null>(nul
 
 
 export const AuthenticationPage: FC = () => {
-    const [activeForm, changeActiveForm] = useState("login");
+    const [activeForm, changeActiveForm] = useState<string>("signup");
 
     return(
         <ActiveFormContext.Provider value={{activeForm, changeActiveForm}}>
-            <div className='page'>
+            <div className='page' id='authentication-page'>
             <div className='container'>
                 
                 <TogglePageButtons />

@@ -27,8 +27,7 @@ const App: FC = () => {
           <Route path='/authentication' element={<AuthenticationPage />}/>
           <Route path='/dashboard'      element={<DashboardPage />}/>
           <Route path='/activity'       element={<ActivityPage />}/>
-          <Route path='*'               element={<AuthenticationPage />}/>
-          <Route path='*' element={<div>Your page isnot fount</div>} />
+          <Route path='*' element={<div>Your page is not found</div>} />
         </Routes>
       </Router>    
     </ThemeContext.Provider>

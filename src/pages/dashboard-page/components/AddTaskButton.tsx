@@ -1,11 +1,16 @@
 import { Icon } from "@iconify/react";
 import { FC } from "react";
 
-export const AddTaskButton: FC = () => {
+interface AddTaskButtonProps {
+    showAddTaskDailogBox: () => void;
+}
+
+export const AddTaskButton: FC<AddTaskButtonProps> = (props) => {
     return(
         <button 
-            id="add-task-btn">
-            <Icon icon={"ph:plus"} />
+            id="display-add-task-dialog"
+            onClick={props.showAddTaskDailogBox}>
+            <Icon icon={"ph:plus-bold"} />
         </button>
     );
 }

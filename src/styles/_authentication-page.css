@@ -33,6 +33,11 @@
     border: 0;
     outline: none;
     cursor: pointer;
+    background: var(--surface-primary);
+}
+
+.toggle-page-btn button:hover { 
+    background: var(--surface-primary-hover);
 }
 
 .toggle-page-btn button:first-child { 

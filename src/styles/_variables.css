@@ -3,14 +3,19 @@
 :root {
     /* Color styles */
     --surface-primary: #fff;
+    --surface-primary-hover: #F1F1FA;
     --text-primary: #fff;
-    --placeholder-text: #4E4C4C;
+    --text-third: #B2B2BE;
+    --placeholder-text: #B2B2BE;
     --button-primary: #8BA0F3;
     --button-secondary: #4156A1;
     --button-primary-hover: #2D6BC8;
+    --button-hover-secondary: #FE0202;    
     --border-primary: #E0E0EC;
-    --stroke-active: #4156A1;
+    --border-secondary: #7681AA;
+    --border-secondary-active: #4156A1;
     --icon-hover-secondary: #FE0202;
+
 
     /* Effect styles */
     --shadow:  0px 4px 4px rgba(0, 0, 0, 0.25);

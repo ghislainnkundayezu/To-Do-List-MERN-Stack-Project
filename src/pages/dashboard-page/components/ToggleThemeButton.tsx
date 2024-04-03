@@ -9,7 +9,7 @@ export const ToggleThemeButton: FC = () => {
         <button 
             id="toggle-theme-btn"
             onClick={() => {toggleTheme()}}>
-           { (themeValue==="light-theme") ? <Icon icon={"ri:moon-fill"} /> : <Icon icon={"ph:sun-thin"} /> }
+           { (themeValue==="light-theme") ? <Icon icon={"heroicons-solid:moon"} /> : <Icon icon={"ph:sun-thin"} /> }
         </button>
     );
 }

@@ -26,7 +26,7 @@
     --text-secondary: #000000;
     --surface-secondary: #FFFFFF;
     --task-surface: #F1F1FA;
-    --task-surface-hover: #DAE0E5;
+    --task-complete-surface: #DAE0E5;
     --icon-primary: #000000;
     --icon-surface: #FFFFFF;
     --icon-surface-hover: #DAE0E5;
@@ -36,7 +36,7 @@
     --text-secondary: #fff;
     --surface-secondary: #272935;
     --task-surface: #35344A;
-    --task-surface-hover: #575578;
+    --task-complete-surface: #575578;
     --icon-primary: #FFFFFF;
     --icons-surface: #272935;
     --icon-surface-hover: #575578;

@@ -10,11 +10,13 @@
     background: var(--surface-secondary);
 }
 
+
 .header {
     width: 100%;
     display: flex;
     gap: 24px;
 }
+
 
 .search-bar {
     flex: 1;
@@ -27,10 +29,12 @@
     color: var(--text-secondary)
 }
 
+
 .search-bar::placeholder {
     color: var(--placeholder-text);
     font-size: 12px;
 }
+
 
 #activity-page-link, #toggle-theme-btn {
     padding: 8px 12px;
@@ -46,9 +50,11 @@
     }
 }
 
+
 :is(#activity-page-link, #toggle-theme-btn):hover {
     background: var(--icon-surface-hover)
 }
+
 
 .body {
     flex: 1;
@@ -62,11 +68,13 @@
    
 }
 
+
 #no-tasks {
     font-size: 16px;
     color: var(--text-third);
     align-self: center;
 }
+
 
 .task {
     height: fit-content;
@@ -79,11 +87,33 @@
     background: var(--task-surface);
 }
 
+.task[data-task-status="complete"] {
+    background: var(--task-complete-surface);
+}
+
 #taskContent {
     flex: 1;
     color: var(--text-secondary);
 }
 
+#taskContent.text-editable {
+    background: var(--task-surface);
+    border: 0;
+    border-bottom: 1px solid var(--border-secondary);
+    padding: 4px 0px;
+    font-size: 16px;
+    color: var(--text-secondary);
+    outline: none;
+}
+
+#taskContent.text-editable::placeholder {
+    color: var(--placeholder-text);
+    font-size: 12px;
+}
+
+#taskContent.text-editable:focus {
+    border-color: var(--border-secondary-active);
+}
 
 .task-check {
     background-color: var(--surface-secondary);
@@ -131,8 +161,9 @@ dialog {
     border-radius: 8px;
     box-shadow: var(--shadow);
     position: absolute;
-    align-self: center;
-    justify-self: center;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     padding: 24px;
     display: flex;
     flex-direction: column;
@@ -149,7 +180,7 @@ dialog {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); 
     z-index: 100; 
-  }
+}
 
 
 

@@ -8,7 +8,13 @@ interface DialogProps {
 
 export const AddTaskDialog: FC<DialogProps> = ({isOpen, onClose, addTask}) => {
     const taskContentText = useRef<HTMLInputElement>(null);    
+    
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void  => {
+        if (event.key === "Enter") {
+            addTask(taskContentText.current?.value);
+        }
         
+    }
     
     return (
         <>
@@ -24,7 +30,8 @@ export const AddTaskDialog: FC<DialogProps> = ({isOpen, onClose, addTask}) => {
                                 id="task-input" 
                                 type="text" 
                                 placeholder="Add a new task here..."
-                                autoComplete="off" />
+                                autoComplete="off"
+                                onKeyDown={handleKeyDown} />
 
                             <div id="dialog-control-buttons">
                                 <button onClick={onClose} id="cancel-button">Cancel</button>                

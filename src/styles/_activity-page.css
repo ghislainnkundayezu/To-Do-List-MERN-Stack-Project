@@ -1,0 +1,55 @@
+#activity-page.page{
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    padding: 56px 240px;
+    background: var(--surface-secondary);
+}
+
+#personal-details, #activities-list, #button-frame {
+    display: flex;
+    color: var(--text-secondary);
+}
+
+#personal-details {
+    flex-direction: column;
+    gap: 20px;
+}
+
+#activities-list {
+    justify-content: space-between;
+    align-items: center;
+}
+
+#activity {
+    width: 20%;
+    display: grid;
+    gap: 20px;
+    justify-items: center;
+    padding: 20px;
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+}
+
+#button-frame {
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#button-frame  :is(button, #dashboard-link)  {
+    padding: 12px;
+    width: 30%;
+    border: 0;
+    border-radius: 8px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16px;
+    color: var(--text-primary);
+    background: var(--button-primary);
+    cursor: pointer;
+}
+
+#button-frame  :is(button, #dashboard-link):hover  {
+    background: var(--button-primary-hover);
+}

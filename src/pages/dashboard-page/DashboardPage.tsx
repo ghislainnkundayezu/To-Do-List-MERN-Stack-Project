@@ -15,6 +15,7 @@ interface TaskData {
 }
 
 type TaskList = TaskData[];
+
 export const DashboardPage: FC = () => {
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [taskList, setTaskList] = useState<TaskList>([]);

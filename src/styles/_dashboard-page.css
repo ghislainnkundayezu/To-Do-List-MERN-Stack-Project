@@ -1,8 +1,6 @@
 /* This css file contain styles for elements in the Dashboard Page */
 
 #dashboard-page.page {
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 28px;

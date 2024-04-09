@@ -17,42 +17,45 @@
     gap: 20px;
 }
 
-.toggle-page-btn {
+.toggle-form-links-container {
     width: 100%;
     display: flex;
     border-radius: 8px;
     border: 1px solid var(--border-primary);
     padding: 1px;
     gap: 0px;
-
+    
 }
 
-.toggle-page-btn button { 
+.toggle-form-links-container .toggle-form-link { 
     flex: 1;
     padding-block: 12px;
     border: 0;
     outline: none;
     cursor: pointer;
     background: var(--surface-primary);
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-primary-black);
 }
 
-.toggle-page-btn button:hover { 
+.toggle-form-links-container .toggle-form-link:hover { 
     background: var(--surface-primary-hover);
 }
 
-.toggle-page-btn button:first-child { 
+.toggle-form-links-container .toggle-form-link:first-child { 
     border-radius: 8px 0px 0px 8px;
     
 }
 
-.toggle-page-btn button:last-child { 
+.toggle-form-links-container .toggle-form-link:last-child { 
     border-radius: 0px 8px 8px 0px;
     
 }
 
 
 
-.toggle-page-btn button.is-active-form { 
+.toggle-form-links-container .toggle-form-link.active { 
     background: var(--button-secondary);
     color: var(--text-primary);
 }

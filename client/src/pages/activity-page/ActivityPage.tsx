@@ -2,13 +2,19 @@ import { FC, useContext, useEffect, useRef } from 'react';
 import { ThemeContext } from '../../App';
 import { ButtonComponent } from './components/ButtonComponents';
 import { Activity } from './components/Activity';
+import { useNavigate } from 'react-router-dom';
 
 
+/**
+ * Display the Activity Page of User.
+ * @returns {JSX.Element} - The returned component.
+ */
 
-export const ActivityPage: FC = () => {
+export const ActivityPage: FC = (): JSX.Element => {
     const { themeValue } = useContext(ThemeContext)!;
     const page = useRef<HTMLDivElement>(null);
     const previousTheme = useRef<string | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (previousTheme.current) {
@@ -21,6 +27,9 @@ export const ActivityPage: FC = () => {
     }, [themeValue]);
 
 
+    const logout = () => {
+        navigate("/authentication");
+    }
 
     return(
         <div ref={page} id='activity-page' className='page'>
@@ -37,7 +46,7 @@ export const ActivityPage: FC = () => {
                 <Activity activityLabel='Total Tasks'/>
             </div>
 
-            <ButtonComponent logout={()=> {}}/>
+            <ButtonComponent logout={logout}/>
 
         </div>
     )

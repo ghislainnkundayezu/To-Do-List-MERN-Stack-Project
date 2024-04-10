@@ -7,6 +7,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Slide, ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import AuthenticationService from "../../../utils/AuthenticationService";
 
 interface LoginFormValues {
     name: string;
@@ -42,10 +44,18 @@ export const LoginFrame: FC = (): JSX.Element => {
         resolver: yupResolver(LoginDataSchema),
     });
 
-    const onSubmit = (data: LoginFormValues) => {
-        console.log(data);
-        toast.success('Form submitted successfully!');
-        navigate("/dashboard");
+    const onSubmit = async (data: LoginFormValues) => {
+        try {
+            
+            const response = await AuthenticationService.login(
+                data.name,
+                data.email,
+                data.password,
+            );
+            console.log(response)
+            toast.success('Form submitted successfully!');
+            //navigate("/dashboard");
+        }catch(error) {}
     };
 
     const onError: SubmitErrorHandler<LoginFormValues> = (errors) => {

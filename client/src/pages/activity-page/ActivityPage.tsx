@@ -3,6 +3,7 @@ import { ThemeContext } from '../../App';
 import { ButtonComponent } from './components/ButtonComponents';
 import { Activity } from './components/Activity';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 
 /**
@@ -32,6 +33,10 @@ export const ActivityPage: FC = (): JSX.Element => {
     }
 
     return(
+        <>
+        <Helmet>
+            <title>Task | Activity</title>
+        </Helmet>
         <div ref={page} id='activity-page' className='page'>
             
             <div id='personal-details'>
@@ -49,5 +54,6 @@ export const ActivityPage: FC = (): JSX.Element => {
             <ButtonComponent logout={logout}/>
 
         </div>
+        </>
     )
 }

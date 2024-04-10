@@ -7,6 +7,7 @@ import { ThemeContext } from '../../App'
 import { AddTaskButton } from './components/AddTaskButton'
 import { AddTaskDialog } from './components/AddTaskDialog'
 import { Task } from './components/Task';
+import { Helmet } from 'react-helmet';
 
 interface TaskData {
     id: string;
@@ -100,6 +101,10 @@ export const DashboardPage: FC = () => {
     }
 
     return(
+        <>
+        <Helmet>
+            <title>Task | Dashboard</title>
+        </Helmet>
         <div ref={page} className='page' id='dashboard-page'>
             
             <div className='header'>
@@ -133,5 +138,6 @@ export const DashboardPage: FC = () => {
                 <AddTaskButton showAddTaskDailogBox={openDialog}/>
             </div>
         </div>
+        </>
     );
 }

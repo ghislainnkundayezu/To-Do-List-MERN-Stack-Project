@@ -52,8 +52,27 @@ export const LoginFrame: FC = (): JSX.Element => {
                 data.email,
                 data.password,
             );
-            console.log(response)
-            toast.success('Form submitted successfully!');
+            
+            if (response.success) {
+                const token: string = response.message;
+                toast.success('Form submitted successfully!');
+                console.log(response);
+                try {
+                const responses = await axios.get('http://localhost:5000/api/v1/protected/dashboard', {
+                    headers: {
+                      Authorization: `Bearer ${token}`
+                    }
+                  });
+                console.log('Data:', responses.data);
+                }catch(error) {
+                    console.log("errors")
+                }
+            
+            }else {
+                toast.error('Error in signing up!');
+            }
+            
+            //toast.error('Error in signing up!');
             //navigate("/dashboard");
         }catch(error) {}
     };

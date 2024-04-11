@@ -6,7 +6,7 @@ const AuthenticationService = {
     login: async (name:string, email: string, password: string) => {
         
         const response = await axios.post(`
-            http://localhost:5000/api/v1/login
+            http://localhost:5000/api/v1/auth/login
         `, {
             name,
             email,
@@ -15,15 +15,14 @@ const AuthenticationService = {
         return response.data;
     },
 
-    register: async (name:string, email: string, password: string, confirmPassword: string) => {
+    register: async (name:string, email: string, password: string) => {
         
         const response = await axios.post(`
-            http://localhost:5000/api/v1/register
+            http://localhost:5000/api/v1/auth/register
         `, {
             name,
             email,
             password,
-            confirmPassword,
         });
 
         return response.data;

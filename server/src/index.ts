@@ -5,19 +5,31 @@ import taskRouter from "./routes/taskRouter";
 import authRouter from "./routes/authRoutes";
 import protectedRouter from "./routes/protectedRoutes";
 import mongoose from 'mongoose';
+import cookieParser from "cookie-parser";
 
 
 const app: Express = express();
 const PORT = 5000;
-
+app.use(cookieParser());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials:true
+}));
 app.use(express.json());
-app.use(cors());
+
+
+
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/protected", protectedRouter);
 
-
+app.get('/cookie', (req, res) => {
+  //res.send("Home");
+  console.log("Here23...")
+   res.cookie("diva", "token", {httpOnly:true, maxAge: 8000, sameSite:'none'});
+  return res.json({success:true})
+});
 // app.post("/api/v1/login", (req: Request, res: Response) => {
 //     console.log(req.body);
 //     res.status(200).json({

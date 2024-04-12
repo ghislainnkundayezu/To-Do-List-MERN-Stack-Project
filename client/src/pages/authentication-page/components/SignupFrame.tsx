@@ -8,7 +8,7 @@ import { Slide, ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import AuthenticationService from "../../../utils/AuthenticationService";
-import axios, { AxiosError } from "axios";
+
 
 interface SignUpFormValues {
     name: string;
@@ -43,9 +43,13 @@ export const SignupFrame: FC = (): JSX.Element => {
                 data.password,
             );
 
+            toast.success('Form submitted successfully!');
+
             if (response.success) {
-                const token: string = response.message;
-                toast.success('Form submitted successfully!');
+                navigate("/dashboard");
+            
+            }else {
+                toast.error('Error in signing up!');
             }
             
             //navigate("/dashboard");

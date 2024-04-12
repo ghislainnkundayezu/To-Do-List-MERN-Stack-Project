@@ -7,6 +7,7 @@ import { ActivityPage } from './pages/activity-page/ActivityPage'
 import { LoginFrame } from './pages/authentication-page/components/LoginFrame'
 import { SignupFrame } from './pages/authentication-page/components/SignupFrame'
 import { PrivateRoute } from './utils/PrivateRoute'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 interface ThemeContextType {
   themeValue: string;
@@ -16,37 +17,44 @@ interface ThemeContextType {
 
 export const ThemeContext = createContext<ThemeContextType | null>(null);
 
+const queryClient = new QueryClient({});
+
 const App: FC = () => {
   const [themeValue, setTheme] = useState<string>("light-theme");
-  
+
   function toggleTheme() {
     setTheme(prevTheme => (prevTheme === 'dark-theme' ? 'light-theme' : 'dark-theme'))
   }
 
   return (
-    <ThemeContext.Provider value={{themeValue, toggleTheme}}>
-      <Router>
-        <Routes>
-          <Route path='/' element={<Navigate to={"/authentication"} replace/>} />
-          
-          <Route path='/authentication' element={<AuthenticationPage />}>
-            <Route index element={<Navigate to='login' replace />} />
-            <Route path='login' element={<LoginFrame />} />
-            <Route path='signup' element={<SignupFrame />} />
-          </Route>
+    <QueryClientProvider client={queryClient}>
 
-          <Route element={<PrivateRoute />}>
-            <Route path='/dashboard' element={<DashboardPage/>} />
-            <Route path='/activity'  element={<ActivityPage />}/>  
-          </Route>
+      <ThemeContext.Provider value={{ themeValue, toggleTheme }}>
+        <Router>
+          <Routes>
+            <Route path='/' element={<Navigate to={"/authentication"} replace />} />
 
-          <Route path='*' element={<div>Your page is not found</div>} />
-          
-        </Routes>
-      </Router>    
-    </ThemeContext.Provider>
-        
-    
+            <Route path='/authentication' element={<AuthenticationPage />}>
+              <Route index element={<Navigate to='login' replace />} />
+              <Route path='login' element={<LoginFrame />} />
+              <Route path='signup' element={<SignupFrame />} />
+            </Route>
+
+            <Route element={<PrivateRoute />}>
+              <Route path='/dashboard' element={<DashboardPage />} />
+              <Route path='/activity' element={<ActivityPage />} />
+            </Route>
+
+            <Route path='*' element={<div>Your page is not found</div>} />
+
+          </Routes>
+        </Router>
+      </ThemeContext.Provider>
+
+
+    </QueryClientProvider>
+
+
   )
 }
 

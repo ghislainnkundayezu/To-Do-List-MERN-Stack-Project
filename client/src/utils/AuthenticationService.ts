@@ -1,6 +1,8 @@
 import axios from "axios";
 
-
+const requestOptions = {
+    withCredentials:true,
+}
 const AuthenticationService = {
     
     login: async (name:string, email: string, password: string) => {
@@ -11,7 +13,7 @@ const AuthenticationService = {
             name,
             email,
             password,
-        });
+        }, requestOptions);
         return response.data;
     },
 
@@ -23,7 +25,7 @@ const AuthenticationService = {
             name,
             email,
             password,
-        });
+        }, requestOptions);
 
         return response.data;
     }, 

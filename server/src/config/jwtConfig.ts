@@ -14,7 +14,7 @@ export const verifyToken = (token: string): Payload | null => {
         return decoded;
       } catch (err) {
         // Handle token verification error
-        console.error('Error verifying token:', err);
+        console.error('Error verifying token:');
         return null;
       }
 }

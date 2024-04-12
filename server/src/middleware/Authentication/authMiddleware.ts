@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { verifyToken } from '../../config/jwtConfig';
+import { error } from 'console';
 interface DecodedToken {
     userId: string;
 }
@@ -10,18 +12,17 @@ declare module 'express' {
     }
 }
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    const authHeader = req.headers['authorization'];
-    console.log(req.headers["authorization"]);
-    const token = authHeader && authHeader.split(' ')[1];
-
+    const token = req.cookies.authtoken;
+    
     if(!token) {
         return res.status(400).json({ success: false, message: "Access denied"});
     }
 
     try {
-        const decode = jwt.verify(token, "salts34568394") as DecodedToken;
+        const decode = verifyToken(token) as DecodedToken; //jwt.verify(token, "salts34568394") as DecodedToken;
+        if(!decode.userId) throw new Error("Invalid Token");
         req.user = decode;
-        console.log("authenticated")
+        console.log("authenticated");
         next();
 
     }catch(error) {

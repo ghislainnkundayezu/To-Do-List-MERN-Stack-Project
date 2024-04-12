@@ -9,6 +9,7 @@ import { AddTaskDialog } from './components/AddTaskDialog'
 import { Task } from './components/Task';
 import { Helmet } from 'react-helmet';
 
+
 interface TaskData {
     id: string;
     content: string;
@@ -23,6 +24,7 @@ export const DashboardPage: FC = () => {
     const [searchQuery, setSearchQuery] = useState<string>("");
 
     const {themeValue} = useContext(ThemeContext)!;
+    
     
     const page = useRef<HTMLDivElement>(null);
     const previousTheme = useRef<string | null>(null);

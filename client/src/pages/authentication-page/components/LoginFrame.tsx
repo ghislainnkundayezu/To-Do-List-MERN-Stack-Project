@@ -7,8 +7,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Slide, ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import AuthenticationService from "../../../utils/AuthenticationService";
+
 
 interface LoginFormValues {
     name: string;
@@ -22,6 +22,7 @@ interface LoginFormValues {
  */
 export const LoginFrame: FC = (): JSX.Element => {
     const navigate = useNavigate();
+    
 
     const LoginDataSchema = yup.object().shape({
         name: yup
@@ -52,28 +53,17 @@ export const LoginFrame: FC = (): JSX.Element => {
                 data.email,
                 data.password,
             );
-            
+           
+            toast.success('Form submitted successfully!');
+
             if (response.success) {
-                const token: string = response.message;
-                toast.success('Form submitted successfully!');
-                console.log(response);
-                try {
-                const responses = await axios.get('http://localhost:5000/api/v1/protected/dashboard', {
-                    headers: {
-                      Authorization: `Bearer ${token}`
-                    }
-                  });
-                console.log('Data:', responses.data);
-                }catch(error) {
-                    console.log("errors")
-                }
+                console.log("navigate")
+                navigate("/dashboard");
             
             }else {
-                toast.error('Error in signing up!');
+                toast.error('Error in signing in!');
             }
             
-            //toast.error('Error in signing up!');
-            //navigate("/dashboard");
         }catch(error) {}
     };
 

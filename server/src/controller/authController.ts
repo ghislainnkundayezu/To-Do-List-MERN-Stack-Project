@@ -24,7 +24,7 @@ export const registerUser = async (req: Request, res: Response) => {
         const token = generateToken({ userId: newUser._id });
 
         res.status(200).json({ success: true, message:token });
-
+        res.cookie('jwt', token, {httpOnly: true, maxAge: 180000});
     }catch(error) {
         console.log("failed to create user!");
         res.status(401).json({success: false, message: "Failed to create a new user"})
@@ -58,8 +58,13 @@ export const loginUser = async (req: Request, res: Response) => {
 
         const token = generateToken({ userId: user._id });
         
-        res.status(200).json({success: true, message: token });
-        
+        res.cookie('authtoken', token, {
+            httpOnly: true, 
+            maxAge: 300000,
+
+        });
+
+        return res.status(200).json({success: true, message: token });
     }catch(error) {
 
     }

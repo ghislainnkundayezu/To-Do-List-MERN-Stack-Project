@@ -60,11 +60,12 @@ export const LoginFrame: FC = (): JSX.Element => {
                 console.log("navigate")
                 navigate("/dashboard");
             
-            }else {
-                toast.error('Error in signing in!');
             }
             
-        }catch(error) {}
+        }catch(error: any) {
+            toast.error(error.response.data.message);
+            
+        }
     };
 
     const onError: SubmitErrorHandler<LoginFormValues> = (errors) => {

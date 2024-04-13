@@ -11,8 +11,12 @@ declare module 'express' {
         user?: DecodedToken; // Optional because it may not always be present
     }
 }
+
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-    const token = req.cookies.authtoken;
+    //const token = req.cookies.authtoken;
+    const authheader = req.headers["authorization"];
+
+    const token = authheader && authheader.split(' ')[1];
     
     if(!token) {
         return res.status(400).json({ success: false, message: "Access denied"});

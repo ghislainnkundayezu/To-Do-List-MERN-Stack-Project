@@ -48,8 +48,6 @@ export const SignupFrame: FC = (): JSX.Element => {
             if (response.success) {
                 navigate("/dashboard");
             
-            }else {
-                toast.error('Error in signing up!');
             }
             
             //navigate("/dashboard");

@@ -1,33 +1,34 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import authMiddleware from "../middleware/Authentication/authMiddleware";
+import { getUserData } from "../controller/Users.controller";
+import { createTask, deleteTask, updateTaskContent, updateTaskStatus } from "../controller/Tasks.controller";
 
 const router = Router();
 
-router.get("/dashboard", authMiddleware, async (req: Request, res: Response)=>{
-    res.json({success: true, userId: req.user});
-    console.log("success")
+router.get("/dashboard", async (req: Request, res: Response) => {
+    res.json({
+        success: true, 
+        message: "User is authorized"
+    });
 });
 
-router.get("/activity", authMiddleware, async (req: Request, res: Response)=>{
-    res.json({success: true, userId: req.user});
-    console.log("success")
+router.get("/activity", async (req: Request, res: Response) => {
+    res.json({
+        success: true, 
+        message: "User is authorized"
+    });
 });
 
 
+router.get("/user", getUserData);
 
-router.get("/dashboard/user/tasks", authMiddleware, async (req: Request, res: Response)=>{
-    res.json({success: true, userId: req.user});
-    console.log("success")
-});
+router.get("/user/create-task", createTask);
 
-router.get("/dashboard/user/tasks", authMiddleware, async (req: Request, res: Response)=>{
-    res.json({success: true, userId: req.user});
-    console.log("success")
-});
+router.patch("/user/update-task-content", updateTaskContent);
 
-router.get("/activity/user", authMiddleware, async (req: Request, res: Response)=>{
-    res.json({success: true, userId: req.user});
-    console.log("success")
-})
+router.patch("/user/update-task-status", updateTaskStatus);
+
+router.delete("/user/delete-task", deleteTask);
+
 
 export default router;

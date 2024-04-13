@@ -18,16 +18,19 @@ export const registerUser = async (req: Request, res: Response) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User({ name, email, password: hashedPassword });
-        
         await newUser.save();
-
+        console.log(newUser);
         const token = generateToken({ userId: newUser._id });
 
-        res.status(200).json({ success: true, message:token });
-        res.cookie('jwt', token, {httpOnly: true, maxAge: 180000});
-    }catch(error) {
-        console.log("failed to create user!");
-        res.status(401).json({success: false, message: "Failed to create a new user"})
+        res.cookie('authtoken', token, {httpOnly: true, maxAge: 300000});
+        
+        return res.status(200).json({ success: true, message:token });
+
+    }catch(error: any) {
+        res.status(401).json({
+            success: false, 
+            message: "Failed to create a new user"
+        });
     }
 }
 
@@ -66,6 +69,25 @@ export const loginUser = async (req: Request, res: Response) => {
 
         return res.status(200).json({success: true, message: token });
     }catch(error) {
+        res.status(401).json({
+            success: false, 
+            message: "Error in signing in User" 
+        });
+    }
+}
 
+
+export const logoutUser = async (req: Request, res: Response) => {
+    try {
+        
+        res.clearCookie("authtoken");
+
+        return res.status(200).json({success: true, message: "User Successfully Logged out" });
+
+    }catch(error) {
+        res.status(401).json({
+            success: false, 
+            message: "Failed to logout user." 
+        });
     }
 }

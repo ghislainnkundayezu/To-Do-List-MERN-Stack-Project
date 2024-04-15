@@ -5,8 +5,8 @@ interface TaskProps {
     content: string;
     status: string;
     deleteTask: (taskId: string) => void;
-    updateTaskStatus: (taskId: string) => void;
-    updateTaskContent: (taskId: string | null | undefined, newTextContent: string | null | undefined) => void;
+    updateTaskStatus: (taskId: string, prevStatus: string) => void;
+    updateTaskContent: (taskId: string, newTextContent: string) => void;
 }
 export const Task: FC<TaskProps> = ({ taskId, content, status, deleteTask, updateTaskStatus, updateTaskContent }) => {
     const [ isEditable, updateEditableStatus] = useState(false);
@@ -19,14 +19,19 @@ export const Task: FC<TaskProps> = ({ taskId, content, status, deleteTask, updat
     }
 
     const handleBlur = (taskId: string): void => {
+        const newText = editableText.current?.textContent;
         updateEditableStatus(false);
-        updateTaskContent(
-            taskId, 
-            editableText.current?.textContent
-        );
+
+        if (newText){
+            updateTaskContent(
+                taskId, 
+                newText
+            );
+        }
     }
     
     return(
+        //TODO: remember to update the checkbox status and the style of a task box when the status changes
         <div key={taskId} data-task-status={status} className="task">
             
             <input 
@@ -34,7 +39,7 @@ export const Task: FC<TaskProps> = ({ taskId, content, status, deleteTask, updat
                 type="checkbox" 
                 name="" 
                 id=""
-                onChange={() => updateTaskStatus(taskId)} />
+                onChange={() => updateTaskStatus(taskId, status)} />
 
             <span 
                 ref={editableText}

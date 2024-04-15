@@ -33,7 +33,7 @@ export const UserStatisticsSchema = new Schema<UserStatisticsSchemaTypes>({
 
 
 
-interface UserSchemaProps extends Document {
+export interface UserSchemaProps extends Document {
     name: string;
     email: string;
     password: string;

@@ -1,5 +1,4 @@
 import { FC, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { v4 as uuidv4 } from "uuid";
 import { SearchBar } from './components/SearchBar'
 import { ActivityPageLink } from './components/ActivityPageLink'
 import { ToggleThemeButton } from './components/ToggleThemeButton'
@@ -8,10 +7,12 @@ import { AddTaskButton } from './components/AddTaskButton'
 import { AddTaskDialog } from './components/AddTaskDialog'
 import { Task } from './components/Task';
 import { Helmet } from 'react-helmet';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { changeTaskContent, changeTaskStatus, createTask, fetchUserData, removeTask } from '../../utils/DataFetchingService';
 
 
 interface TaskData {
-    id: string;
+    _id: string;
     content: string;
     status: string;
 }
@@ -22,19 +23,11 @@ export const DashboardPage: FC = () => {
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [taskList, setTaskList] = useState<TaskList>([]);
     const [searchQuery, setSearchQuery] = useState<string>("");
-
-    const {themeValue} = useContext(ThemeContext)!;
-    
-    
     const page = useRef<HTMLDivElement>(null);
     const previousTheme = useRef<string | null>(null);
 
-    const filteredTaskList = useMemo(() =>{
-        return  taskList.filter(task => {
-                    return task.content.toLowerCase().includes(searchQuery.toLowerCase());
-                });
-    }, [taskList, searchQuery]);
-    
+    const {themeValue} = useContext(ThemeContext)!;
+
     useEffect(() => {
         if (previousTheme.current) {
             page.current?.classList.remove(previousTheme.current);
@@ -42,10 +35,74 @@ export const DashboardPage: FC = () => {
 
        page.current!.classList.add(themeValue);
        previousTheme.current = themeValue;
+
        
-    }, [themeValue]);
+       
+    }, [themeValue, taskList]);
 
+    const { data, isSuccess } = useQuery({
+        queryKey: ["userData"],
+        queryFn: fetchUserData
+    });
 
+    
+    const filteredTaskList = useMemo(() =>{
+        return  taskList.filter(task => {
+                    return task.content.toLowerCase().includes(searchQuery.toLowerCase());
+                });
+    }, [taskList, searchQuery]);
+    
+
+    const fetchedTasks = useMemo(() => {
+        if(isSuccess) {
+            return data.data.tasks
+        }
+
+        return [];
+
+    }, [data, isSuccess])
+
+    useEffect(()=> {
+        if(isSuccess) {
+            setTaskList(fetchedTasks);
+        }
+    }, [fetchedTasks, isSuccess])
+
+    const queryClient = useQueryClient();
+
+    const createTaskMutation = useMutation({
+        mutationFn: createTask,
+        onSuccess: () => {
+            // Optionally, you can invalidate or update queries here
+            queryClient.invalidateQueries({queryKey: ['userData']});
+          },
+    });
+
+    const deleteTaskMutation = useMutation({
+        mutationFn: removeTask,
+        onSuccess: () => {
+            // Optionally, you can invalidate or update queries here
+            queryClient.invalidateQueries({queryKey: ['userData']});
+          },
+    });;
+
+    const taskContentMutation = useMutation({
+        mutationFn: changeTaskContent,
+        onSuccess: () => {
+            // Optionally, you can invalidate or update queries here
+            queryClient.invalidateQueries({queryKey: ['userData']});
+          },
+    });;
+
+    const taskStatusMutation = useMutation({
+        mutationFn: changeTaskStatus,
+        onSuccess: () => {
+            // Optionally, you can invalidate or update queries here
+            queryClient.invalidateQueries({queryKey: ['userData']});
+          },
+    });;
+
+    
     const updateSearchQuery = (searchQuery: string | undefined): void => {
         setSearchQuery(searchQuery!);
     }
@@ -61,45 +118,63 @@ export const DashboardPage: FC = () => {
     const addTask = (taskContent: string | undefined): void => {
         
         if (taskContent) { 
-            const newId: string = uuidv4();
-            const newTask: TaskData = {
-                id: newId,
+            //const newId: string = uuidv4();
+            const newTask = {
                 content: taskContent,
                 status: "ongoing",
             }
-            const newTaskList = [...taskList, newTask];
-            setTaskList(newTaskList);
+            //const newTaskList = [...taskList, newTask];
+            //setTaskList(newTaskList);
+            //closeDialog();
+
+            createTaskMutation.mutateAsync(newTask);
+
             closeDialog();
         }
         
     };
 
     const deleteTask = (taskId: string): void => {
-        const newTaskList: TaskList = taskList.filter(task => task.id !== taskId);
-        setTaskList(newTaskList);
+        //const newTaskList: TaskList = taskList.filter(task => task._id !== taskId);
+        //setTaskList(newTaskList);
+        deleteTaskMutation.mutateAsync(taskId);
     }
 
-    const updateTaskContent = (taskId: string | null | undefined, newTextContent: string | null | void): void => {
-        const newTaskList: TaskList = taskList.map(task => {
-            if (task.id === taskId) {
-                return { ...task, content: newTextContent! }; }
-            return task;
-        });
-        setTaskList(newTaskList);
-        
+    const updateTaskContent = (taskId: string, newTextContent: string): void => {
+        // const newTaskList: TaskList = taskList.map(task => {
+        //     if (task._id === taskId) {
+        //         return { ...task, content: newTextContent! }; }
+        //     return task;
+        // });
+
+        // setTaskList(newTaskList);
+        const newTaskContent = {
+            "taskId": taskId,
+            "newContent": newTextContent,
+        };
+
+        taskContentMutation.mutateAsync(newTaskContent);
+
     }
 
-    const updateTaskStatus = (taskId: string): void => {
+    const updateTaskStatus = (taskId: string, prevStatus: string): void => {
         
-        const newTaskList = taskList.map((task) => {
-            if(task.id === taskId) {
-               return {...task, status: (task.status==="ongoing") ? "complete" : "ongoing"}
-            }
+        // const newTaskList = taskList.map((task) => {
+        //     if(task._id === taskId) {
+        //        return {...task, status: (task.status==="ongoing") ? "complete" : "ongoing"}
+        //     }
 
-            return task;
-        });
-        setTaskList(newTaskList);
-        console.log(taskList)
+        //     return task;
+        // });
+        // setTaskList(newTaskList);
+        // console.log(taskList)
+
+        const newTaskContent = {
+            "taskId": taskId,
+            "newStatus": (prevStatus==="ongoing") ? "completed" : "ongoing",
+        };
+        console.log(newTaskContent)
+        taskStatusMutation.mutateAsync(newTaskContent);
     }
 
     return(
@@ -123,7 +198,8 @@ export const DashboardPage: FC = () => {
                     filteredTaskList.map((task) => {
                         return(
                             <Task 
-                                taskId={task.id} 
+                                key={task._id}
+                                taskId={task._id} 
                                 content={task.content} 
                                 status={task.status}
                                 deleteTask={deleteTask}

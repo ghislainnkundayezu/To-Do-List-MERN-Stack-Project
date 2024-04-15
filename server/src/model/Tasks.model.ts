@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Types} from 'mongoose';
 import User from './Users.model';
-//import db from '../db';
+
 interface TaskDataSchemaProps extends Document {
     content: string;
     status: string;
@@ -25,13 +25,11 @@ const TaskSchema = new Schema<TaskDataSchemaProps>({
 });
 
 
-//TODO: remember to work on this function
-TaskSchema.pre("deleteOne", {query: false, document: true}, async function(next) {
+TaskSchema.pre('deleteOne', {query:true, document: false}, async function(next) {
+    const task = await Task.findById(this.getQuery()._id);
+    const taskId = task?._id;
+    console.log(task?.owner);
     try   {
-        const taskId = this.owner;
-        console.log("okay");
-
-        //TODO: I want to also update the ongoing or completed statistics of the User.
         const user = await User.findOneAndUpdate(
             { tasks: taskId },
 
@@ -39,7 +37,7 @@ TaskSchema.pre("deleteOne", {query: false, document: true}, async function(next)
                 $pull: { tasks: taskId },
                 $inc: { 
                         "statistics.deleted": 1,
-                        [`statistics.${this.status}`]: -1 
+                        [`statistics.${task?.status}`]: -1 
                 }
             }
         );
@@ -49,12 +47,6 @@ TaskSchema.pre("deleteOne", {query: false, document: true}, async function(next)
             throw new Error("Failed to delete task");
             
         }
-
-        // if (this.status==="ongoing") {
-        //     user.statistics.ongoing -= 1;
-        // }else {
-        //     user.statistics.completed -= 1;
-        // }
 
         next();
         

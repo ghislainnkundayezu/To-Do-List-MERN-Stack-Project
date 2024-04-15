@@ -3,6 +3,7 @@ import { FC } from "react";
 // Defines the type of parameters the Activity component receives.
 interface ActivityProps {
     activityLabel: string;  // represents the name of the activity.
+    value: number;
 }
 
 /**
@@ -11,11 +12,11 @@ interface ActivityProps {
  * @returns {JSX.Element} - The returned component.
  */
 
-export const Activity: FC<ActivityProps> = ({activityLabel}: ActivityProps): JSX.Element => {
+export const Activity: FC<ActivityProps> = ({activityLabel, value}: ActivityProps): JSX.Element => {
     return(
         <div id="activity">
             <h4>{activityLabel}</h4>
-            <span>10</span>
+            <span>{value}</span>
         </div>
     );
 }

@@ -14,6 +14,7 @@ export const InputField: FC<InputFieldProps> = (props) => {
                 className="input"
                 type={props.type} 
                 placeholder={props.placeholder}  
+                autoComplete="off"
                 { ...props.register(props.name) }
             />
     );

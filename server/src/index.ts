@@ -13,10 +13,12 @@ import authMiddleware from "./middleware/Authentication/authMiddleware";
 const app: Express = express();
 const PORT = 5000;
 app.use(cookieParser());
+
 app.use(cors({
   origin: "http://localhost:5173",
   credentials:true
 }));
+
 app.use(express.json());
 
 
@@ -34,15 +36,11 @@ const DB_URL = `mongodb+srv://ghislainnkundayezu:${DB_password}@cluster0.aam2my6
 mongoose.connect(DB_URL)
   .then(result => {
     console.log("Database connected");
-
-    
-    //addStatisticsProperty();
-
     app.listen(PORT, () => {
-       console.log("I am listening at this ", PORT);
+       console.log("I am listening at PORT ", PORT);
     });
-})
-  .catch(error => console.log("Connection to the database failed: ", error));
+  })
+  .catch(error => console.log("Connection to the database failed: ", error.message));
 
 
 
@@ -50,26 +48,3 @@ mongoose.connect(DB_URL)
 
 
 
-  const addStatisticsProperty = async () => {
-    try {
-      // Check if the "statistics" property already exists in the User schema
-      const user = await User.findOne();
-      if (user && user.statistics) {
-        console.log('Statistics property already exists in the User schema');
-        return;
-      }
-  
-      // Define the new "statistics" property to be added
-      const statistics = UserStatisticsSchema;
-  
-      // Add the new "statistics" property to the User schema definition
-      //await User.updateMany({}, { $set: { statistics } }, { multi: true });
-      await User.updateMany({}, { $inc: { __v: 1 }, },{ multi: true })
-      console.log('Statistics property added successfully');
-    } catch (error) {
-      console.error('Failed to add statistics property:', error);
-    } finally {
-      // Disconnect from the MongoDB database
-      mongoose.disconnect();
-    }
-  };

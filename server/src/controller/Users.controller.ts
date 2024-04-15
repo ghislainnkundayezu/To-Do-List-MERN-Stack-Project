@@ -1,4 +1,4 @@
-import User from "../model/Users.model";
+import User, { UserSchemaProps } from "../model/Users.model";
 import { Request, Response } from "express";
 
 export const getUserData = async (req: Request, res: Response) => {
@@ -9,8 +9,8 @@ export const getUserData = async (req: Request, res: Response) => {
         if (data.length===0) {
             throw new Error("User not found");
         }
-
-        res.status(200).json({success: true, data: data});
+        const { password, ...userDataWithoutPassword } = data[0].toObject();
+        res.status(200).json({success: true, data: userDataWithoutPassword});
     
     }catch(error: any) {
         res.status(400).json({

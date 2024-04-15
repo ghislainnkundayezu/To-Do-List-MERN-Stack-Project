@@ -22,7 +22,7 @@ router.get("/activity", async (req: Request, res: Response) => {
 
 router.get("/user", getUserData);
 
-router.get("/user/create-task", createTask);
+router.post("/user/create-task", createTask);
 
 router.patch("/user/update-task-content", updateTaskContent);
 

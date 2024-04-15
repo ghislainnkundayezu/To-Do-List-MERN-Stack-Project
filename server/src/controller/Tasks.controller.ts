@@ -45,17 +45,18 @@ export const createTask = async (req: Request, res: Response) => {
 
 export const deleteTask = async (req: Request, res: Response) => {
     try{
-        const { taskId } = req.body;
+        const taskId = req.query.taskId;
         
         if (!taskId) {
             throw new Error("taskId is not Provided");
         }
 
         const deletedTask = await Task.deleteOne({ _id: taskId });
-
+        
         if (deletedTask.deletedCount === 0) {
             return res.status(404).json({ success: false, message: "Task not found" });
         }
+
 
         res.status(200).json({
             success: true,
@@ -65,7 +66,7 @@ export const deleteTask = async (req: Request, res: Response) => {
     }catch(error: any) {
         res.status(400).json({
             success: false,
-            message: "Failed to create a task",
+            message: "Failed to delete a task",
             error: error.message,
         });
     }
@@ -83,6 +84,11 @@ export const updateTaskContent = async (req: Request, res: Response) => {
 
 
         const task = await Task.findById(taskId);
+        const taskOwner = task && Array.isArray(task.owner) && task.owner[0];
+       
+        if(taskOwner.toString() !== req.user?.userId) {
+            throw new Error("You are not allowed to update this task");
+        }
 
         if (!task) {
             throw new Error("Task Not Found");
@@ -109,7 +115,7 @@ export const updateTaskContent = async (req: Request, res: Response) => {
 export const updateTaskStatus = async (req: Request, res: Response) => {
     try {
         const { taskId, newStatus } = req.body;
-
+        console.log(taskId, newStatus)
         type StatusType = "ongoing" | "completed";
 
         if (!(newStatus === "ongoing" || newStatus === "completed")) {
@@ -125,6 +131,12 @@ export const updateTaskStatus = async (req: Request, res: Response) => {
 
         const task = await Task.findById(taskId);
 
+        const taskOwner = task && Array.isArray(task.owner) && task.owner[0];
+
+        if(taskOwner.toString() !== userId) {
+            throw new Error("You are not allowed to update this task");
+        }
+
         if (!task) {
             throw new Error("Task Not Found");
         }
@@ -133,9 +145,10 @@ export const updateTaskStatus = async (req: Request, res: Response) => {
             throw new Error("Task Status already exists");
         }
 
-        task.status = newStatus;
+        
 
         const user = await User.findById(userId);
+        
         if (user) {
             if (newStatus==="ongoing") {
                 user.statistics.completed -= 1;                
@@ -150,7 +163,7 @@ export const updateTaskStatus = async (req: Request, res: Response) => {
         }else {
             throw new Error("User Doesn't exist");
         }
-        
+        task.status = newStatus;
         await task.save();
 
         res.status(200).json({

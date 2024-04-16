@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 interface TaskProps {
     taskId: string;
@@ -10,8 +10,16 @@ interface TaskProps {
 }
 export const Task: FC<TaskProps> = ({ taskId, content, status, deleteTask, updateTaskStatus, updateTaskContent }) => {
     const [ isEditable, updateEditableStatus] = useState(false);
+    const [ isChecked, setIsChecked ] = useState(false);
     const editableText = useRef<HTMLSpanElement>(null);
 
+    useEffect(() => {
+        if (status==="completed") {
+            setIsChecked(true);
+        }else {
+            setIsChecked(false);
+        }
+    }, [status])
 
     const toggleEditTaskContent = (): void => {
         (isEditable) ? 
@@ -37,8 +45,7 @@ export const Task: FC<TaskProps> = ({ taskId, content, status, deleteTask, updat
             <input 
                 className="task-check" 
                 type="checkbox" 
-                name="" 
-                id=""
+                checked={isChecked}
                 onChange={() => updateTaskStatus(taskId, status)} />
 
             <span 

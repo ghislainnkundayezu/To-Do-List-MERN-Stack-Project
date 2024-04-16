@@ -47,14 +47,12 @@ export const SignupFrame: FC = (): JSX.Element => {
 
             if (response.success) {
                 navigate("/dashboard");
-            
+            }else {
+                throw new Error(response.data.message);
             }
             
-            //navigate("/dashboard");
         }catch(error: any) {
-            console.log(error.response.data);
-            toast.error(error.response.data.message);
-            //toast.error(error);
+            toast.error(error.message);
         }
     }
 

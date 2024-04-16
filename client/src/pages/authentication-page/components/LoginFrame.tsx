@@ -60,11 +60,12 @@ export const LoginFrame: FC = (): JSX.Element => {
                 console.log("navigate")
                 navigate("/dashboard");
             
+            }else {
+                throw new Error(response.data.message);
             }
             
         }catch(error: any) {
-            toast.error(error.response.data.message);
-            
+            toast.error(error.message);
         }
     };
 

@@ -1,10 +1,12 @@
-import { FC, useContext, useEffect, useMemo, useRef } from 'react';
-import { ThemeContext } from '../../App';
+import { FC, useRef } from 'react';
 import { ButtonComponent } from './components/ButtonComponents';
 import { Activity } from './components/Activity';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchUserData } from '../../utils/DataFetchingService';
+import useThemeClass from '../../customHooks/useThemeClass';
+import AuthenticationService from '../../utils/AuthenticationService';
 import axios from 'axios';
 
 
@@ -25,53 +27,41 @@ interface DataQuery {
 }
 
 export const ActivityPage: FC = (): JSX.Element => {
-    const { themeValue } = useContext(ThemeContext)!;
     const page = useRef<HTMLDivElement>(null);
-    const previousTheme = useRef<string | null>(null);
     const navigate = useNavigate();
-    
-    
     
     
     const queryClient = useQueryClient();
     
-    
+    const cachedData =  queryClient.getQueryData<DataQuery>(['userData']);
 
-    const { data: userData, isLoading } = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: ["userData"],
-        enabled: true,
-        queryFn: async () => {
-            const response = await axios.get(
-                `http://localhost:5000/api/v1/protected/user`,
-                {
-                  withCredentials: true,
-                }
-              );
-              return response.data;
-        }
+        enabled: false,
+        queryFn:  fetchUserData,
+        retry: 0,
+        refetchOnWindowFocus: true
     });
+
+    const userData = cachedData || data; // Use cached data if it exists, otherwise use fetched data
+    
+    useThemeClass(page);
+    
 
     if (isLoading) {
         return <div>Loading....</div>
     }
-    console.log(userData)
+
+    if (!userData && !isLoading) {
+        queryClient.fetchQuery({queryKey: ['userData'], queryFn:  fetchUserData});
+        return <div>Loading....</div>
+    }
     
-    //TODO: remeber to work on this code.
 
-    // useEffect(() => {
-
-    //     if (previousTheme.current) {
-    //         page.current?.classList.remove(previousTheme.current);
-    //     }
-
-    //    page.current!.classList.add(themeValue);
-    //    previousTheme.current = themeValue;
-       
-    // }, [themeValue]);
-
-
-    const logout = () => {
-        navigate("/authentication");
+    const logout = async () => {
+        AuthenticationService.logout();
+        queryClient.invalidateQueries({queryKey: ['userData']});
+        //navigate("/authentication");
     }
 
     return(
@@ -79,7 +69,7 @@ export const ActivityPage: FC = (): JSX.Element => {
         <Helmet>
             <title>Task | Activity</title>
         </Helmet>
-        <div ref={page} id='activity-page' className='page'>
+        <div ref={page} id='activity-page' className="page">
             
             <div id='personal-details'>
                 <h1>Personal Details</h1>

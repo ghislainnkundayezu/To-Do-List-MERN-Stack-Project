@@ -85,7 +85,7 @@
     background: var(--task-surface);
 }
 
-.task[data-task-status="complete"] {
+.task[data-task-status="completed"] {
     background: var(--task-complete-surface);
 }
 

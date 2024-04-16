@@ -56,7 +56,7 @@ export async function changeTaskStatus(taskContent: {taskId: string, newStatus: 
 export async function changeTaskContent(taskContent:{taskId: string, newContent: string}) {
     const requestBody = {
         "taskId" : taskContent.taskId,
-        "neewContent" : taskContent.newContent
+        "newContent" : taskContent.newContent
     };
 
     const response = await axios.patch(

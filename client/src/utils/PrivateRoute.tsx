@@ -1,27 +1,12 @@
 import { FC } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../customHooks/useAuth";
 
 
 export const PrivateRoute: FC = () => {
     const location = useLocation();
+    const {userIsAuthorized, isLoading, isError} = useAuth(location.pathname);
 
-    const { data, isLoading, isError } = useQuery({
-        queryKey: [location.pathname],
-        queryFn:  async () => {
-            // Perform the data fetching
-            const response = await axios.get(
-              `http://localhost:5000/api/v1/protected${location.pathname}`,
-              {
-                withCredentials: true,
-              }
-            );
-            return response.data;
-          }
-    });
-
-    const userAuthorized = data?.success;  ;
     if (isLoading ) {
         return <div>Loading...</div>;
     }
@@ -31,6 +16,6 @@ export const PrivateRoute: FC = () => {
     }
 
     return(
-       userAuthorized ? <Outlet /> : <Navigate to={"/authentication/login"} />
+      userIsAuthorized ? <Outlet /> : <Navigate to={"/authentication/login"} />
     );
 }

@@ -3,7 +3,14 @@ import bcrypt from 'bcrypt';
 import User from "../model/Users.model";
 import { generateToken } from "../config/jwtConfig";
 
-export const registerUser = async (req: Request, res: Response) => {
+/**
+ * It creates a new user in the system.
+ * @param req {Request} - contains data of the request to the server.
+ * @param res {Res} - contains data of the response back to the client.
+ * @returns { Promise<Response> } - returns an asynchronous response in form of JSON data.
+ */
+
+export const registerUser = async (req: Request, res: Response): Promise<Response> => {
     try {
         
         const { name, email, password } = req.body;
@@ -27,15 +34,21 @@ export const registerUser = async (req: Request, res: Response) => {
         return res.status(200).json({ success: true, message:token });
 
     }catch(error: any) {
-        res.status(401).json({
+        return res.status(401).json({
             success: false, 
             message: "Failed to create a new user"
         });
     }
 }
 
+/**
+ * It receives credentials of a user and check if the user exists in the system.
+ * @param req {Request} - contains data of the request to the server.
+ * @param res {Res} - contains data of the response back to the client.
+ * @returns { Promise<Response> } - returns an asynchronous response in form of JSON data.
+ */
 
-export const loginUser = async (req: Request, res: Response) => {
+export const loginUser = async (req: Request, res: Response): Promise<Response> => {
     try {
         const { name, email, password } = req.body;
         if(!name || !email|| !password) {
@@ -69,23 +82,29 @@ export const loginUser = async (req: Request, res: Response) => {
 
         return res.status(200).json({success: true, message: token });
     }catch(error) {
-        res.status(401).json({
+        return res.status(401).json({
             success: false, 
             message: "Error in signing in User" 
         });
     }
 }
 
+/**
+ * It Logs the user out of the system.
+ * @param req {Request} - contains data of the request to the server.
+ * @param res {Res} - contains data of the response back to the client.
+ * @returns { Promise<Response> } - returns an asynchronous response in form of JSON data.
+ */
 
-export const logoutUser = async (req: Request, res: Response) => {
+export const logoutUser = async (req: Request, res: Response): Promise<Response> => {
     try {
         
         res.clearCookie("authtoken");
-
+        console.log("User Logged out successfully")
         return res.status(200).json({success: true, message: "User Successfully Logged out" });
 
     }catch(error) {
-        res.status(401).json({
+        return res.status(401).json({
             success: false, 
             message: "Failed to logout user." 
         });

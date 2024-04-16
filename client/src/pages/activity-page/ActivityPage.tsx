@@ -7,7 +7,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchUserData } from '../../utils/DataFetchingService';
 import useThemeClass from '../../customHooks/useThemeClass';
 import AuthenticationService from '../../utils/AuthenticationService';
-import axios from 'axios';
+
 
 
 /**

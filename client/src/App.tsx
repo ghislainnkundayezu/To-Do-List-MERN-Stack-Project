@@ -8,7 +8,7 @@ import { LoginFrame } from './pages/authentication-page/components/LoginFrame'
 import { SignupFrame } from './pages/authentication-page/components/SignupFrame'
 import { PrivateRoute } from './utils/PrivateRoute'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
+import { MessageProvider } from './providers/MessageProvider'
 interface ThemeContextType {
   themeValue: string;
   toggleTheme: () => void;
@@ -28,30 +28,30 @@ const App: FC = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <MessageProvider>
+        <ThemeContext.Provider value={{ themeValue, toggleTheme }}>
+            <Router>
+              <Routes>
+                <Route path='/' element={<Navigate to={"/authentication"} replace />} />
 
-      <ThemeContext.Provider value={{ themeValue, toggleTheme }}>
-        <Router>
-          <Routes>
-            <Route path='/' element={<Navigate to={"/authentication"} replace />} />
+                <Route path='/authentication' element={<AuthenticationPage />}>
+                  <Route index element={<Navigate to='login' replace />} />
+                  <Route path='login' element={<LoginFrame />} />
+                  <Route path='signup' element={<SignupFrame />} />
+                </Route>
 
-            <Route path='/authentication' element={<AuthenticationPage />}>
-              <Route index element={<Navigate to='login' replace />} />
-              <Route path='login' element={<LoginFrame />} />
-              <Route path='signup' element={<SignupFrame />} />
-            </Route>
+                <Route element={<PrivateRoute />}>
+                  <Route path='/dashboard' element={<DashboardPage />} />
+                  <Route path='/activity' element={<ActivityPage />} />
+                </Route>
 
-            <Route element={<PrivateRoute />}>
-              <Route path='/dashboard' element={<DashboardPage />} />
-              <Route path='/activity' element={<ActivityPage />} />
-            </Route>
+                <Route path='*' element={<div>Your page is not found</div>} />
 
-            <Route path='*' element={<div>Your page is not found</div>} />
-
-          </Routes>
-        </Router>
-      </ThemeContext.Provider>
-
-
+              </Routes>
+            </Router>
+          </ThemeContext.Provider>
+      </MessageProvider>
+    
     </QueryClientProvider>
 
 

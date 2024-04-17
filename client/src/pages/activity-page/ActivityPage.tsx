@@ -7,6 +7,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchUserData } from '../../utils/DataFetchingService';
 import useThemeClass from '../../customHooks/useThemeClass';
 import AuthenticationService from '../../utils/AuthenticationService';
+import { PuffLoader } from 'react-spinners';
 
 
 
@@ -54,14 +55,19 @@ export const ActivityPage: FC = (): JSX.Element => {
 
     if (!userData && !isLoading) {
         queryClient.fetchQuery({queryKey: ['userData'], queryFn:  fetchUserData});
-        return <div>Loading....</div>
+        return(
+            <div id="loading-animation-container">
+                <PuffLoader color="#36d7b7" loading={isLoading} size={100} />
+            </div>
+        );
     }
     
 
     const logout = async () => {
         AuthenticationService.logout();
-        queryClient.invalidateQueries({queryKey: ['userData']});
-        //navigate("/authentication");
+        //queryClient.invalidateQueries({queryKey: ['userData']});
+        queryClient.clear();
+        navigate("/authentication", { replace: true });
     }
 
     return(
@@ -77,10 +83,10 @@ export const ActivityPage: FC = (): JSX.Element => {
             </div>
             
             <div id='activities-list'>
-                <Activity activityLabel='Ongoing Tasks' value={userData.data.statistics.ongoing}/>
-                <Activity activityLabel='Finished Tasks' value={userData.data.statistics.completed}/>
-                <Activity activityLabel='Deleted Tasks' value={userData.data.statistics.deleted}/>
-                <Activity activityLabel='Total Tasks' value={userData.data.statistics.total}/>
+                <Activity activityLabel='Ongoing' value={userData.data.statistics.ongoing}/>
+                <Activity activityLabel='Finished' value={userData.data.statistics.completed}/>
+                <Activity activityLabel='Deleted' value={userData.data.statistics.deleted}/>
+                <Activity activityLabel='Total' value={userData.data.statistics.total}/>
             </div>
 
             <ButtonComponent logout={logout}/>

@@ -4,10 +4,10 @@ import { FormSubmitButton } from "./FormSubmitButton";
 import { SubmitErrorHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Slide, ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import AuthenticationService from "../../../utils/AuthenticationService";
+import { useMessage } from "../../../customHooks/useMessage";
 
 
 interface LoginFormValues {
@@ -16,12 +16,16 @@ interface LoginFormValues {
     password: string;
 }
 
+
+
 /**
  * Represents a Login Form component enabling user to Login into the app.
  * @returns {JSX.Element} - The returned component.
  */
 export const LoginFrame: FC = (): JSX.Element => {
     const navigate = useNavigate();
+    const { showMessage } = useMessage()!;
+    
     
 
     const LoginDataSchema = yup.object().shape({
@@ -54,34 +58,28 @@ export const LoginFrame: FC = (): JSX.Element => {
                 data.password,
             );
            
-            toast.success('Form submitted successfully!');
-
             if (response.success) {
+                showMessage("Welcome", "success");
+                
                 console.log("navigate")
-                navigate("/dashboard");
+                navigate("/dashboard", { replace: true });
             
             }else {
                 throw new Error(response.data.message);
             }
             
         }catch(error: any) {
-            toast.error(error.message);
+            
+            showMessage(error.message, "error");
+
         }
     };
 
     const onError: SubmitErrorHandler<LoginFormValues> = (errors) => {
         Object.values(errors).forEach((error) => {
-            toast.error(error.message, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide
-            });
+           
+            showMessage(error.message!, "error");
+            
         })
     }
 
@@ -114,19 +112,7 @@ export const LoginFrame: FC = (): JSX.Element => {
             <FormSubmitButton value="Login" name="login" />
 
         </form>
-        <ToastContainer 
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={true}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-            transition={Slide}
-        />
+        
         </>
     );
 }

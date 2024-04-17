@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { changeTaskContent, changeTaskStatus, createTask, fetchUserData, removeTask } from '../../utils/DataFetchingService';
 import useThemeClass from '../../customHooks/useThemeClass'
+import { PuffLoader } from 'react-spinners'
 
 
 interface TaskData {
@@ -27,12 +28,17 @@ export const DashboardPage: FC = () => {
     
     useThemeClass(page);
 
-    const { data, isSuccess } = useQuery({
+    const { data, isLoading, isSuccess } = useQuery({
         queryKey: ["userData"],
         queryFn: fetchUserData,
         retry: 0,
     });
 
+    if (isLoading) {
+        <div id="loading-animation-container">
+                <PuffLoader color="#36d7b7" loading={isLoading} size={100} />
+        </div>
+    }
     
     const filteredTaskList = useMemo(() =>{
         return  taskList.filter(task => {

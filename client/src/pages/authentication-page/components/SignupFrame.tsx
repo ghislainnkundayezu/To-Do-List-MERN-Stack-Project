@@ -4,10 +4,10 @@ import { FormSubmitButton } from "./FormSubmitButton";
 import { SubmitErrorHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Slide, ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import AuthenticationService from "../../../utils/AuthenticationService";
+import { useMessage } from "../../../customHooks/useMessage";
 
 
 interface SignUpFormValues {
@@ -18,6 +18,8 @@ interface SignUpFormValues {
 }
 
 export const SignupFrame: FC = (): JSX.Element => {
+    const { showMessage } = useMessage()!;
+    
     const navigate = useNavigate();
 
     const SignUpDataSchema = yup.object().shape({
@@ -43,16 +45,16 @@ export const SignupFrame: FC = (): JSX.Element => {
                 data.password,
             );
 
-            toast.success('Form submitted successfully!');
+            showMessage('Form submitted successfully!');
 
             if (response.success) {
-                navigate("/dashboard");
+                navigate("/dashboard", { replace: true });
             }else {
                 throw new Error(response.data.message);
             }
             
         }catch(error: any) {
-            toast.error(error.message);
+            showMessage(error.message);
         }
     }
 
@@ -60,17 +62,9 @@ export const SignupFrame: FC = (): JSX.Element => {
     const onError: SubmitErrorHandler<SignUpFormValues> = (errors) => {
 
         Object.values(errors).forEach((error) => {
-            toast.error(error.message, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Slide,
-            });
+            showMessage(error.message!)
+            
+
         });
     };
     
@@ -83,6 +77,7 @@ export const SignupFrame: FC = (): JSX.Element => {
                 placeholder="Enter your name..."
                 name="name"
                 register={register}
+                
             />
 
             <InputField 
@@ -111,19 +106,7 @@ export const SignupFrame: FC = (): JSX.Element => {
             
         </form>
 
-        <ToastContainer 
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={true}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-            transition={Slide}
-        />
+        
         </>
     );
 }

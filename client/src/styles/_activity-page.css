@@ -19,6 +19,7 @@
 #activities-list {
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 #activity {
@@ -52,4 +53,70 @@
 
 #button-frame  :is(button, #dashboard-link):hover  {
     background: var(--button-primary-hover);
+}
+
+
+@media (max-width: 1150px) {
+    #activity-page.page {
+        padding-inline: 120px;
+    }
+    
+
+}
+
+@media (max-width: 920px) {
+    #activity-page.page {
+        padding-inline: 80px;
+    }
+    
+
+}
+
+@media (max-width: 660px) {
+    #activity-page.page {
+        padding-inline: 20px;
+    }
+    
+
+}
+
+@media (max-width: 520px) {
+    #activity-page.page {
+        padding-inline: 20px;
+        
+    }
+    
+    #activities-list {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        align-self: center;
+    }
+
+    #activity {
+        width: 100%;
+    }
+
+    #button-frame  :is(button, #dashboard-link)  {
+        width: 60%;
+    }
+}
+
+@media (max-width: 400px) {
+    #button-frame  :is(button, #dashboard-link)  {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 250px) {
+    #button-frame  :is(button, #dashboard-link)  {
+        width: 100%;
+    }
+    
+    #activities-list {
+       grid-template-columns: repeat(1, 1fr);
+        
+    }
 }

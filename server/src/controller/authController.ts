@@ -29,7 +29,12 @@ export const registerUser = async (req: Request, res: Response): Promise<Respons
         console.log(newUser);
         const token = generateToken({ userId: newUser._id });
 
-        res.cookie('authtoken', token, {httpOnly: true, maxAge: 300000});
+        res.cookie('authtoken', token, {
+			httpOnly: true, 
+			maxAge: 300000, 
+			sameSite: 'none',
+			secure: true,
+		});
         
         return res.status(200).json({ success: true, message:token });
 
@@ -54,7 +59,7 @@ export const loginUser = async (req: Request, res: Response): Promise<Response> 
         if(!name || !email|| !password) {
             return res.status(400).json({success: false, message: "Incomplete data"})
         }
-
+		
         const [userByName, userByEmail] = await Promise.all([
             User.findOne({ name }),
             User.findOne({ email })
@@ -77,6 +82,8 @@ export const loginUser = async (req: Request, res: Response): Promise<Response> 
         res.cookie('authtoken', token, {
             httpOnly: true, 
             maxAge: 3000000,
+			sameSite: 'none',
+			secure: true,
 
         });
 

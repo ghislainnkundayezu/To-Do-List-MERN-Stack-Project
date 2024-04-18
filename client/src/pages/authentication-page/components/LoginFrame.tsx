@@ -91,6 +91,7 @@ export const LoginFrame: FC = (): JSX.Element => {
                 placeholder="Enter your name..."
                 name="name"
                 register={register}
+                errors={errors}
             />
             
             <InputField 
@@ -98,6 +99,7 @@ export const LoginFrame: FC = (): JSX.Element => {
                 placeholder="Enter your email..."
                 name="email"
                 register={register}
+                errors={errors}
             />
             
 
@@ -106,6 +108,7 @@ export const LoginFrame: FC = (): JSX.Element => {
                 placeholder="Enter your password..."
                 name="password"
                 register={register}
+                errors={errors}
             />
             
              

@@ -33,7 +33,6 @@ const App: FC = () => {
             <Router>
               <Routes>
                 <Route path='/' element={<Navigate to={"/authentication"} replace />} />
-
                 <Route path='/authentication' element={<AuthenticationPage />}>
                   <Route index element={<Navigate to='login' replace />} />
                   <Route path='login' element={<LoginFrame />} />
@@ -45,7 +44,7 @@ const App: FC = () => {
                   <Route path='/activity' element={<ActivityPage />} />
                 </Route>
 
-                <Route path='*' element={<div>Your page is not found</div>} />
+                <Route path='*' element={<div> Page not Found!</div>} />
 
               </Routes>
             </Router>

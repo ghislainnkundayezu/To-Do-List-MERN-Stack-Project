@@ -6,9 +6,18 @@ interface InputFieldProps {
     name: string;
     placeholder?: string;
     register: UseFormRegister<any>;
+    errors?: Record<string, any>;
 }
 
 export const InputField: FC<InputFieldProps> = (props) => {
+
+    let hasError =  false;
+    console.log(Object.keys(props.errors!))
+    if (Object.keys(props.errors!).includes(props.name)) {
+        hasError = true;
+    }
+    
+
     return(
             <input 
                 className="input"
@@ -16,6 +25,11 @@ export const InputField: FC<InputFieldProps> = (props) => {
                 placeholder={props.placeholder}  
                 autoComplete="off"
                 { ...props.register(props.name) }
+                style={{
+                    border: hasError ? "1px solid red" : "",
+                  }}
             />
     );
 }
+
+

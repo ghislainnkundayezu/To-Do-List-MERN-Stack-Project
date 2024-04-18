@@ -1,16 +1,19 @@
 import jwt from "jsonwebtoken";
+import dotenv  from "dotenv";
+
+dotenv.config();
 
 interface Payload {
     userId: string;
 }
 
 export const generateToken = (payload: Payload): string => {
-    return jwt.sign(payload, "salts34568394", {'expiresIn': '30m'})
+    return jwt.sign(payload, process.env.TOKEN_SECRET!, {'expiresIn': '30m'})
 }
 
 export const verifyToken = (token: string): Payload | null => {
     try {
-        const decoded = jwt.verify(token, "salts34568394") as Payload;
+        const decoded = jwt.verify(token, process.env.TOKEN_SECRET!) as Payload;
         return decoded;
       } catch (err) {
         // Handle token verification error

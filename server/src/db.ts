@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 
-const DB_username = "ghislainnkundayezu";
-const DB_password = "U5gP8OJxqyAFtSk3";
-const DB_URL = `mongodb+srv://ghislainnkundayezu:${DB_password}@cluster0.aam2my6.mongodb.net/To-Do-List?retryWrites=true&w=majority&appName=Cluster0`;
+const DB_URL=`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.aam2my6.mongodb.net/${process.env.DB_COLLECTION}?retryWrites=true&w=majority&appName=Cluster0`;
 
 mongoose.connect(DB_URL)
   .then(result => console.log("Database connected"))

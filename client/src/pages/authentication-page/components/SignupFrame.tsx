@@ -77,7 +77,7 @@ export const SignupFrame: FC = (): JSX.Element => {
                 placeholder="Enter your name..."
                 name="name"
                 register={register}
-                
+                errors={errors}
             />
 
             <InputField 
@@ -85,6 +85,7 @@ export const SignupFrame: FC = (): JSX.Element => {
                 placeholder="Enter your email..."
                 name="email"
                 register={register}
+                errors={errors}
             />
             
             <InputField
@@ -92,7 +93,7 @@ export const SignupFrame: FC = (): JSX.Element => {
                 placeholder="Enter your password..."
                 name="password"
                 register={register}
-
+                errors={errors}
             />
             
             <InputField 
@@ -100,6 +101,7 @@ export const SignupFrame: FC = (): JSX.Element => {
                 placeholder="Confirm password..."
                 name="confirmPassword"
                 register={register}
+                errors={errors}
             />
             
             <FormSubmitButton value="Signup" name="signup" />

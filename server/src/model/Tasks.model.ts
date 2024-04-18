@@ -29,7 +29,7 @@ const TaskSchema = new Schema<TaskDataSchemaProps>({
 TaskSchema.pre('deleteOne', {query:true, document: false}, async function(next) {
     const task = await Task.findById(this.getQuery()._id);
     const taskId = task?._id;
-    console.log(task?.owner);
+    
     try   {
         const user = await User.findOneAndUpdate(
             { tasks: taskId },

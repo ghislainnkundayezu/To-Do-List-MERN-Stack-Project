@@ -1,15 +1,16 @@
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
+import { Helmet } from 'react-helmet';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { PuffLoader } from 'react-spinners'
+
 import { SearchBar } from './components/SearchBar'
 import { ActivityPageLink } from './components/ActivityPageLink'
 import { ToggleThemeButton } from './components/ToggleThemeButton'
 import { AddTaskButton } from './components/AddTaskButton'
 import { AddTaskDialog } from './components/AddTaskDialog'
 import { Task } from './components/Task';
-import { Helmet } from 'react-helmet';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { changeTaskContent, changeTaskStatus, createTask, fetchUserData, removeTask } from '../../utils/DataFetchingService';
 import useThemeClass from '../../customHooks/useThemeClass'
-import { PuffLoader } from 'react-spinners'
 
 
 interface TaskData {

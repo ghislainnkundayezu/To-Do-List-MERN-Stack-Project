@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Types} from 'mongoose';
-//import db from '../db';
 
+// Defines the type the properties of a document in the users collection.
 interface UserStatisticsSchemaTypes extends Document {
     ongoing: number;
     completed: number;
@@ -8,6 +8,7 @@ interface UserStatisticsSchemaTypes extends Document {
     total: number;
 }
 
+// This is the schema or structure of a document in the users collection.
 export const UserStatisticsSchema = new Schema<UserStatisticsSchemaTypes>({
     ongoing: { 
         type: Number, 
@@ -32,8 +33,8 @@ export const UserStatisticsSchema = new Schema<UserStatisticsSchemaTypes>({
 });
 
 
-
-export interface UserSchemaProps extends Document {
+// Defines the type the properties of a document in the users collection.
+interface UserSchemaProps extends Document {
     name: string;
     email: string;
     password: string;
@@ -46,6 +47,7 @@ export interface UserSchemaProps extends Document {
     };
 }
 
+// This is the schema or structure of a document in the users collection.
 const UserSchema = new Schema<UserSchemaProps>({
     name: {
         type: String,
@@ -75,6 +77,8 @@ const UserSchema = new Schema<UserSchemaProps>({
     },
 });
 
+
+// model the users collection based on the UserSchema.
 const User = mongoose.model<UserSchemaProps>('Users', UserSchema);
 
 export default User;

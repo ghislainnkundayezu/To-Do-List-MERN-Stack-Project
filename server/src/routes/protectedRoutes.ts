@@ -3,8 +3,9 @@ import authMiddleware from "../middleware/Authentication/authMiddleware";
 import { getUserData } from "../controller/Users.controller";
 import { createTask, deleteTask, updateTaskContent, updateTaskStatus } from "../controller/Tasks.controller";
 
-const router = Router();
+const router = Router();  // Router object.
 
+//
 router.get("/dashboard", async (req: Request, res: Response) => {
     res.json({
         success: true, 

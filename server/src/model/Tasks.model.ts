@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Types} from 'mongoose';
 import User from './Users.model';
 
-// Defines the type the properties of a document in the tasks collection
+// Defines the type the properties of a document in the tasks collection.
 interface TaskDataSchemaProps extends Document {
     content: string;
     status: string;
@@ -27,6 +27,7 @@ const TaskSchema = new Schema<TaskDataSchemaProps>({
 
 // Middleware that gets executed before deleting a document in the tasks collection.
 TaskSchema.pre('deleteOne', {query:true, document: false}, async function(next) {
+    
     const task = await Task.findById(this.getQuery()._id);
     const taskId = task?._id;
     
@@ -56,7 +57,9 @@ TaskSchema.pre('deleteOne', {query:true, document: false}, async function(next) 
     }
 });
 
-const Task = mongoose.model<TaskDataSchemaProps>('Tasks', TaskSchema);      // a model of the Task schema in the tasks collection.
+
+// model the tasks collection based on the TaskSchema.
+const Task = mongoose.model<TaskDataSchemaProps>('Tasks', TaskSchema);      
 
 
 

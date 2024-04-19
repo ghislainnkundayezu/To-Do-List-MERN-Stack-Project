@@ -1,4 +1,4 @@
-import User, { UserSchemaProps } from "../model/Users.model";
+import User from "../model/Users.model";
 import { Request, Response } from "express";
 
 /**
@@ -9,11 +9,19 @@ import { Request, Response } from "express";
 export const getUserData = async (req: Request, res: Response): Promise<Response> => {
     
     try {
+
+        // get the userId passed on to the Request object by the Authentication middleware.
         const userId = req.user?.userId;
+
+        // get all of the data associated to the user with that specific Id.
         const data = await User.where("_id").equals(userId).populate("tasks")  //find({_id: userId}).populate('tasks')//.exec();
+        
+        // if there is not data throw an error to the user.
         if (data.length===0) {
             throw new Error("User not found");
         }
+
+        // if the data exists destructure the password of the user from the data and return the rest of the data.
         const { password, ...userDataWithoutPassword } = data[0].toObject();
         return res.status(200).json({success: true, data: userDataWithoutPassword});
     

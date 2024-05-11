@@ -151,7 +151,7 @@ export const updateTaskContent = async (req: Request, res: Response): Promise<Re
 export const updateTaskStatus = async (req: Request, res: Response): Promise<Response> => {
     try {
         const { taskId, newStatus } = req.body;
-        console.log(taskId, newStatus)
+        
         type StatusType = "ongoing" | "completed";
 
         if (!(newStatus === "ongoing" || newStatus === "completed")) {

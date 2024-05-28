@@ -1,7 +1,12 @@
-import { Request, Response } from "express";
+import { CookieOptions, Request, Response } from "express";
 import bcrypt from 'bcrypt';
 import User from "../model/Users.model";
 import { generateToken } from "../config/jwtConfig";
+
+const cookieOptions: CookieOptions = {
+    httpOnly: true, 
+    maxAge: 30000000,
+}
 
 /**
  * It creates a new user in the system.
@@ -39,12 +44,7 @@ export const registerUser = async (req: Request, res: Response): Promise<Respons
         // generate a token using the userId and return it to the user as a cookie. 
         const token = generateToken({ userId: newUser._id });
 
-        res.cookie('authtoken', token, {
-			httpOnly: true, 
-			maxAge: 300000, 
-			sameSite: 'none',
-			secure: true,
-		});
+        res.cookie('authtoken', token, cookieOptions);
         
         return res.status(200).json({ success: true, message: token });
 
@@ -100,13 +100,7 @@ export const loginUser = async (req: Request, res: Response): Promise<Response> 
         // generate a token using the userId and return it to the user as a cookie.
         const token = generateToken({ userId: user._id });
         
-        res.cookie('authtoken', token, {
-            httpOnly: true, 
-            maxAge: 3000000,
-			sameSite: 'none',
-			secure: true,
-
-        });
+        res.cookie('authtoken', token, cookieOptions);
 
         return res.status(200).json({success: true, message: token });
     }catch(error) {
@@ -128,7 +122,7 @@ export const logoutUser = async (req: Request, res: Response): Promise<Response>
     try {
         // send a response to remove authentication token from the cookie storage of the client.
         res.clearCookie("authtoken");
-        console.log("User Logged out successfully");
+        
         return res.status(200).json({success: true, message: "User Successfully Logged out" });  
 
     }catch(error) {

@@ -1,14 +1,17 @@
 import './styles/main.css'
 import { FC, createContext, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
 import { AuthenticationPage } from './pages/authentication-page/AuthenticationPage'
 import { DashboardPage } from './pages/dashboard-page/DashboardPage'
 import { ActivityPage } from './pages/activity-page/ActivityPage'
 import { LoginFrame } from './pages/authentication-page/components/LoginFrame'
 import { SignupFrame } from './pages/authentication-page/components/SignupFrame'
 import { PrivateRoute } from './utils/PrivateRoute'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MessageProvider } from './providers/MessageProvider'
+import NotFoundPage from './pages/notFoundPage'
+
 interface ThemeContextType {
   themeValue: string;
   toggleTheme: () => void;
@@ -17,7 +20,14 @@ interface ThemeContextType {
 
 export const ThemeContext = createContext<ThemeContextType | null>(null);
 
-const queryClient = new QueryClient({});
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: true, 
+    }
+  }
+});
+
 
 const App: FC = () => {
   const [themeValue, setTheme] = useState<string>("light-theme");
@@ -44,13 +54,14 @@ const App: FC = () => {
                   <Route path='/activity' element={<ActivityPage />} />
                 </Route>
 
-                <Route path='*' element={<div> Page not Found!</div>} />
+                <Route path='*' element={<NotFoundPage />} />
 
               </Routes>
             </Router>
           </ThemeContext.Provider>
       </MessageProvider>
-    
+
+      
     </QueryClientProvider>
 
 

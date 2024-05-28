@@ -60,8 +60,6 @@ export const LoginFrame: FC = (): JSX.Element => {
            
             if (response.success) {
                 showMessage("Welcome", "success");
-                
-                console.log("navigate")
                 navigate("/dashboard", { replace: true });
             
             }else {

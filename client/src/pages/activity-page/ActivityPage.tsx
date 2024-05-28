@@ -12,60 +12,37 @@ import { PuffLoader } from 'react-spinners';
 
 
 /**
- * Display the Activity Page of User.
+ * Displays the Activity Page of User.
  * @returns {JSX.Element} - The returned component.
  */
-
-interface DataQuery {
-    data: {
-        statistics: {
-            ongoing: number;
-            completed: number;
-            deleted: number;
-            total: number;
-        }
-    }
-}
 
 export const ActivityPage: FC = (): JSX.Element => {
     const page = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
     
-    
     const queryClient = useQueryClient();
-    
-    const cachedData =  queryClient.getQueryData<DataQuery>(['userData']);
 
-    const { data, isLoading } = useQuery({
+    const { data: userData, isLoading } = useQuery({
         queryKey: ["userData"],
-        enabled: false,
         queryFn:  fetchUserData,
         retry: 0,
-        refetchOnWindowFocus: true
+       
     });
 
-    const userData = cachedData || data; // Use cached data if it exists, otherwise use fetched data
-    
     useThemeClass(page);
-    
 
     if (isLoading) {
-        return <div>Loading....</div>
-    }
-
-    if (!userData && !isLoading) {
-        queryClient.fetchQuery({queryKey: ['userData'], queryFn:  fetchUserData});
         return(
             <div id="loading-animation-container">
                 <PuffLoader color="#36d7b7" loading={isLoading} size={100} />
             </div>
         );
     }
-    
+
+     
 
     const logout = async () => {
         AuthenticationService.logout();
-        //queryClient.invalidateQueries({queryKey: ['userData']});
         queryClient.clear();
         navigate("/authentication", { replace: true });
     }

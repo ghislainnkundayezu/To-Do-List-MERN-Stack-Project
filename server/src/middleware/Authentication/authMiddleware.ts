@@ -26,7 +26,6 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     //const authheader = req.headers["authorization"];
     //const token = authheader && authheader.split(' ')[1];
 
-
    const token = req.cookies.authtoken;   // extract the token from the cookies sent in the Request object.
     
 

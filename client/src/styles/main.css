@@ -18,3 +18,36 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.page-not-found {
+    height: 100%;
+    display: flex;
+    gap: 48px;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 200px;
+    background: var(--surface-secondary);
+}
+
+.page-not-found h1 {
+    text-align: center;
+    font-size: 5rem;
+    font-weight: 800;
+}
+
+.page-not-found .to-dashboard-btn {
+    padding: 16px 24px;
+    border: 0;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    background: var(--button-third);
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-primary-black);
+}
+
+.page-not-found .to-dashboard-btn:hover {
+    background: var(--button-primary-hover);
+    color: var(--text-primary)
+}

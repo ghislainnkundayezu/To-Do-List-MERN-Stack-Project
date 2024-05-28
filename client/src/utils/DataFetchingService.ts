@@ -1,13 +1,19 @@
 import axios from "axios";
 
+
+const api = axios.create({
+    baseURL:  "http://192.168.1.76:3000/api/v1/",
+    withCredentials: true,
+});
+
+
 const requestOptions = {
     withCredentials:true,
 }
 
 export async function fetchUserData() {
 
-    const response = await axios.get(
-        `http://localhost:5000/api/v1/protected/user`,
+    const response = await api.get(`/protected/user`,
         requestOptions
     );
     return response.data;
@@ -18,8 +24,7 @@ export async function createTask(taskContent: {content: string, status: string})
         "content" : taskContent.content,
         "status" : taskContent.status
     }
-    const response = await axios.post(
-        `http://localhost:5000/api/v1/protected/user/create-task`,
+    const response = await api.post(`/protected/user/create-task`,
         requestBody,
         requestOptions
 
@@ -30,8 +35,7 @@ export async function createTask(taskContent: {content: string, status: string})
 
 export async function removeTask(taskId: string) {
     
-    const response = await axios.delete(
-        `http://localhost:5000/api/v1/protected/user/delete-task?taskId=${taskId}`,
+    const response = await api.delete(`/protected/user/delete-task?taskId=${taskId}`,
         requestOptions
       );
       return response.data;
@@ -42,14 +46,13 @@ export async function changeTaskStatus(taskContent: {taskId: string, newStatus: 
         "taskId" : taskContent.taskId,
         "newStatus" : taskContent.newStatus
     };
-    console.log(requestBody)
-    const response = await axios.patch(
-        `http://localhost:5000/api/v1/protected/user/update-task-status`,
+
+    const response = await api.patch(`/protected/user/update-task-status`,
         requestBody,
         requestOptions
       );
 
-      return response.data;
+    return response.data;
 
 }
 
@@ -59,22 +62,22 @@ export async function changeTaskContent(taskContent:{taskId: string, newContent:
         "newContent" : taskContent.newContent
     };
 
-    const response = await axios.patch(
-        `http://localhost:5000/api/v1/protected/user/update-task-content`,
+    const response = await api.patch(`/protected/user/update-task-content`,
         requestBody,
         requestOptions
       );
       
-      return response.data;
+    return response.data;
 
 }
 
 export async function logout() {
-    const response = await axios.post(
-        `http://localhost:5000/api/v1/protected/logout`,
+    const response = await api.post(`/protected/logout`,
         requestOptions
       );
       
-      return response.data;
+    return response.data;
 
 }
+
+

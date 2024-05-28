@@ -21,25 +21,21 @@ export const Task: FC<TaskProps> = ({ taskId, content, status, deleteTask, updat
         }
     }, [status])
 
-    const toggleEditTaskContent = (): void => {
-        (isEditable) ? 
-        updateEditableStatus(false) : updateEditableStatus(true);
-    }
-
-    const handleBlur = (taskId: string): void => {
+    const handleSave = (taskId: string): void => {
         const newText = editableText.current?.textContent;
-        updateEditableStatus(false);
-
-        if (newText){
+        if (newText && isEditable){
             updateTaskContent(
                 taskId, 
                 newText
             );
         }
+
+        updateEditableStatus(status => !status);
+
     }
     
     return(
-        //TODO: remember to update the checkbox status and the style of a task box when the status changes
+        
         <div key={taskId} data-task-status={status} className="task">
             
             <input 
@@ -54,14 +50,13 @@ export const Task: FC<TaskProps> = ({ taskId, content, status, deleteTask, updat
                 className={(isEditable) ? "text-editable" : ""}
                 contentEditable={isEditable}
                 suppressContentEditableWarning={true}
-                onBlur={() => handleBlur(taskId)}
             >{content}
             
             </span>
 
             <button 
                 id="edit-task-button"
-                onClick={toggleEditTaskContent}>
+                onClick={() => handleSave(taskId)}>
                     {isEditable ? "Save" : "Edit"}
             </button>
             

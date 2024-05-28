@@ -3,7 +3,12 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../customHooks/useAuth";
 import { PuffLoader } from "react-spinners";
 
-export const PrivateRoute: FC = () => {
+/**
+ * It handles private routes to ensure that a user is authorized to access them.
+ * 
+ * @returns {JSX.Element}
+ */
+export const PrivateRoute: FC = (): JSX.Element => {
     const location = useLocation();
     const {userIsAuthorized, isLoading, isError} = useAuth(location.pathname);
 

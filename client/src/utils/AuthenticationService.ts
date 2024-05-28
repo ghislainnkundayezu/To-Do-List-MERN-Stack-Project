@@ -1,20 +1,20 @@
 import axios from "axios";
 
-const requestOptions = {
+const api = axios.create({
+    baseURL:  "http://192.168.1.76:3000/api/v1/",
     withCredentials: true,
-}
+});
+
 const AuthenticationService = {
     
     login: async (name:string, email: string, password: string) => {
         
         try {
-            const response = await axios.post(`
-            http://localhost:5000/api/v1/auth/login
-            `, {
+            const response = await api.post(`/auth/login`, {
                 name,
                 email,
                 password,
-            }, requestOptions);
+            });
             return response.data;
         }catch(error: any) {
             console.log(error)
@@ -30,20 +30,20 @@ const AuthenticationService = {
 
     register: async (name:string, email: string, password: string) => {
         
-        const response = await axios.post(`
-            http://localhost:5000/api/v1/auth/register
-        `, {
+        const response = await api.post(`/auth/register`, {
             name,
             email,
             password,
-        }, requestOptions);
+        });
 
         return response.data;
     }, 
 
     logout: async () => {
-        await axios.post(`http://localhost:5000/api/v1/auth/logout`, 
-                null, requestOptions);
+
+        await api.post(`/auth/logout`, 
+                null);
+
     }
 };
 

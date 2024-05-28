@@ -12,7 +12,7 @@ interface InputFieldProps {
 export const InputField: FC<InputFieldProps> = (props) => {
 
     let hasError =  false;
-    console.log(Object.keys(props.errors!))
+    
     if (Object.keys(props.errors!).includes(props.name)) {
         hasError = true;
     }

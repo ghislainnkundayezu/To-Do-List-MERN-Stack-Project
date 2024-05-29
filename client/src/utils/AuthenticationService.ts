@@ -4,8 +4,7 @@ const api = axios.create({
     baseURL: `https://todolist-web-app-jgyi.onrender.com/api/v1/`,
     withCredentials: true,
 });
-console.log(process.env.BASE_URL)
-console.log(api.getUri())
+
 
 const AuthenticationService = {
     

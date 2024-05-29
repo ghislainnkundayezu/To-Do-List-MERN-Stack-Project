@@ -4,6 +4,8 @@ const api = axios.create({
     baseURL:   `${process.env.BASE_URL}/api/v1/`,
     withCredentials: true,
 });
+console.log(process.env.BASE_URL)
+console.log(api.getUri())
 
 const AuthenticationService = {
     

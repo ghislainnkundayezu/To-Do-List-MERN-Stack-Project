@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 
 const api = axios.create({
-  baseURL:   `${process.env.BASE_URL}/api/v1/`,
+  baseURL:   `https://your-server-url.onrender.com/api/v1/`,
   withCredentials: true,
 });
 

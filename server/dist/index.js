@@ -20,12 +20,11 @@ app.use(express_1.default.json()); // middleware that allows our code to interce
 app.use(express_1.default.static(path_1.default.join(__dirname, '../../client/dist')));
 app.use("/api/v1/auth", authRoutes_1.default); // middleware to route all requests related to authentication the authRouter.
 app.use("/api/v1/protected", authMiddleware_1.default, protectedRoutes_1.default); // middleware to route all requests related to protected resources to the protectedRputer.
-const IP_ADDRESS = process.env.HOST_IP_ADDRESS;
 // serve the index.html file to handle client side routing.
 app.get('*', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, '../../client/dist', 'index.html'));
 });
-const server = app.listen(PORT, IP_ADDRESS, () => {
+const server = app.listen(PORT, () => {
     console.log("I am listening at PORT ", PORT);
     const { address, port } = server.address();
     console.log(`Server running on ${address}:${port}`);
